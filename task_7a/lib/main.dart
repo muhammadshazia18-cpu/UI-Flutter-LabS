@@ -1,0 +1,81 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+void main() => runApp(const MainApp());
+
+class MainApp extends StatelessWidget {
+  const MainApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: const Text('Form Application 25WH5A0509_SHAZIA')),
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Image.asset('images/3d_avatar_21.png', width: 150, height: 300),
+              // Custom text fields for user input
+              const CustomTextField(label: 'First Name'),
+              const CustomTextField(label: 'Last Name'),
+              const CustomTextField(label: 'Email', suffixText: '@mlritm.ac.in'),
+              const CustomTextField(
+                prefixText: '+91 ',
+                label: 'Phone Number',
+                keyboardType: TextInputType.phone,
+                maxLength: 10,
+              ),
+              const Divider(indent: 8, endIndent: 8), // Divider
+              const CustomTextField(label: 'Username'),
+              const CustomTextField(label: 'Password', obscureText: true),
+              const CustomTextField(label: 'Confirm Password', obscureText: true),
+              ElevatedButton(
+                onPressed: () {},
+                child: const Text('Register'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// Custom text field widget
+class CustomTextField extends StatelessWidget {
+  final String label;
+  final TextInputType? keyboardType;
+  final bool obscureText;
+  final String? prefixText, suffixText;
+  final int? maxLength;
+
+  const CustomTextField({
+    super.key,
+    required this.label,
+    this.keyboardType,
+    this.suffixText,
+    this.prefixText,
+    this.maxLength,
+    this.obscureText = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      child: TextFormField(
+        keyboardType: keyboardType,
+        obscureText: obscureText,
+        inputFormatters: maxLength != null
+            ? [LengthLimitingTextInputFormatter(maxLength)]
+            : null,
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(),
+          labelText: label,
+          suffixText: suffixText,
+          prefixText: prefixText,
+        ),
+      ),
+    );
+  }
+}
